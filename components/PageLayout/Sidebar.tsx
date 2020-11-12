@@ -7,7 +7,7 @@ import {Transition} from "@headlessui/react";
 export default function Sidebar({mobile, isOpen, onClose = null}) {
     const [expanded, toggleExpanded] = useState(true)
     const styles = {
-        root: `${expanded ? "w-100" : "w-100 md:w-auto"} h-full md:border-r shadow-2xl 
+        root: `${expanded ? "w-100" : "w-96 md:w-auto"} h-full md:border-r shadow-2xl 
         md:shadow-none border-gray-200 bg-white z-50 shadow-sm p-2.5 flex flex-col absolute md:relative md:flex`,
         iconButton: "p-2 bg-gray-100 rounded-full hover:bg-gray-200 focus:bg-gray-200",
         courseChatListItem: `p-3 hover:bg-gray-100 focus:bg-gray-200 rounded-xl flex justify-start 
@@ -15,7 +15,7 @@ export default function Sidebar({mobile, isOpen, onClose = null}) {
         hiddenWhenCollapsed: " " + (!expanded && "md:hidden"),
         hiddenWhenExpanded: " " + (expanded && "md:hidden"),
         avatar: "h-11 w-11 flex justify-center items-center rounded-full text-white ",
-        selected: " bg-blue-50 text-blue-600 hover:bg-blue-100 focus:bg-blue-100 border border-blue-100 shadow-sm",
+        selected: " bg-blue-50 text-blue-600 hover:bg-blue-100 focus:bg-blue-100 border border-blue-100",
     }
     return <Transition
         show={isOpen || !mobile}
