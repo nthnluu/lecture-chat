@@ -5,6 +5,15 @@
 .inlineCode {
     @apply p-1.5 bg-gray-100 rounded-md font-mono text-gray-800
 }
+
+button:focus {
+    @apply outline-none
+}
+
+.h-stack {
+    @apply flex justify-between items-center
+}
+
 /* purgecss end ignore */
 
 @tailwind  utilities;

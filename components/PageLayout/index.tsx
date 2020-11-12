@@ -1,9 +1,11 @@
-import {ReactElement, useContext, useEffect} from "react";
+import {ReactElement, useContext, useEffect, useState} from "react";
 import SessionContext from "../../util/SessionContext";
-import Button from "../forms/Button";
 import {useRouter} from "next/router";
 import fb from "../../util/firebase-config";
 import Head from "next/head";
+import Sidebar from "./Sidebar";
+import LinearProgress from "../LinearProgress";
+import Navbar from "./Navbar";
 
 interface Props {
     children: ReactElement;
@@ -27,8 +29,10 @@ const PageLayout: React.FC<Props> = ({children, privateRoute, title, redirectPat
 
     const router = useRouter()
     const {isAuthenticated, userProfile} = useContext(SessionContext)
+    const [sidebarOpen, toggleSidebar] = useState(true)
 
     if (privateRoute && !isAuthenticated) return <RedirectHome/>
+
 
     function signOut() {
         fb.auth().signOut()
@@ -42,25 +46,21 @@ const PageLayout: React.FC<Props> = ({children, privateRoute, title, redirectPat
                 {title}
             </title>
         </Head>
-        <div className="fixed w-full">
-            <div className="h-1 bg-gradient-to-r from-teal-400 to-blue-600"/>
-            <div className="flex justify-between py-2.5 px-4 shadow-md items-center bg-white">
-                <a href="https://github.com/nthnluu/no-bs-next"
-                   className="flex justify-between items-center font-medium text-lg focus:underline truncate">
-                    🔥 nthnluu/no-bs-next
-                </a>
-                <div className="items-center">
-                    {isAuthenticated ? <Button sizes="md" variant="filled" onClick={signOut}>Sign out</Button> :
-                        <span className="space-x-2">
-                    <Button onClick={() => router.push('/auth/signin')} sizes="md" variant="light">Log in</Button>
-                    <Button onClick={() => router.push('/auth/signup')} sizes="md" variant="filled">Sign up</Button>
-                </span>}
+        <LinearProgress hidden={true}/>
+        <div className="flex h-screen">
+            <div>
+                <div className="hidden md:flex h-full">
+                    <Sidebar isOpen={true} mobile={false}/>
                 </div>
-
+                <div className="block md:hidden h-full">
+                    <Sidebar isOpen={sidebarOpen} onClose={toggleSidebar} mobile={true}/>
+                </div>
+            </div>
+            <div className="overflow-auto w-full p-2.5">
+                <Navbar/>
+                {children}
             </div>
         </div>
-
-        {children}
     </div>
 
 

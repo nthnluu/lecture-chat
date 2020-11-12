@@ -3,6 +3,10 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
     theme: {
         extend: {
+            width: {
+                '100': '26rem'
+
+            },
             boxShadow: {
                 'outline-primary': '0 0 0 3px rgba(164, 201, 254, 0.45)'
             },
