@@ -14,6 +14,9 @@ button:focus {
     @apply flex justify-between items-center
 }
 
+.default-padding {
+    @apply p-2
+}
 /* purgecss end ignore */
 
 @tailwind  utilities;

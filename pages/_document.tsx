@@ -13,6 +13,7 @@ class MyDocument extends Document {
                     <script src="https://kit.fontawesome.com/aeb9fcb31a.js" crossOrigin="anonymous"/>
                     <link rel="stylesheet"
                           href="https://fonts.googleapis.com/css?family=Inter"/>
+                    <link rel="icon" href="/logo.svg" type="image/svg"/>
                 </Head>
                 <body>
                 <Main/>

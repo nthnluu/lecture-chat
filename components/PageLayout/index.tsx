@@ -13,52 +13,57 @@ interface Props {
     redirectPath?: string;
     content?: any
     title: string;
+    buttons: ReactElement;
 }
 
-const RedirectHome = () => {
+const RedirectTo = ({href}) => {
     const router = useRouter()
 
     useEffect(() => {
-        router.push('/')
+        router.push(href)
     }, [])
 
     return <></>
 }
 
-const PageLayout: React.FC<Props> = ({children, privateRoute, title, redirectPath}) => {
-
+const PageLayout: React.FC<Props> = ({
+                                         children,
+                                         privateRoute,
+                                         title,
+                                         redirectPath,
+                                         buttons
+                                     }) => {
     const router = useRouter()
     const {isAuthenticated, userProfile} = useContext(SessionContext)
-    const [sidebarOpen, toggleSidebar] = useState(true)
-
-    if (privateRoute && !isAuthenticated) return <RedirectHome/>
-
-
+    const [sidebarOpen, toggleSidebar] = useState(false)
+    if (privateRoute && !isAuthenticated) return <RedirectTo href={redirectPath}/>
     function signOut() {
         fb.auth().signOut()
             .then(() => router.push('/'))
     }
-
-
     return <div>
         <Head>
             <title>
-                {title}
+                {`${title} | Lecture Chat`}
             </title>
         </Head>
         <LinearProgress hidden={true}/>
         <div className="flex h-screen">
             <div>
-                <div className="hidden md:flex h-full">
+                <div className="hidden lg:flex h-full">
                     <Sidebar isOpen={true} mobile={false}/>
                 </div>
-                <div className="block md:hidden h-full">
+                <div className="block lg:hidden h-full">
                     <Sidebar isOpen={sidebarOpen} onClose={toggleSidebar} mobile={true}/>
                 </div>
             </div>
-            <div className="overflow-auto w-full p-2.5">
-                <Navbar/>
-                {children}
+            <div className="overflow-auto w-full default-padding">
+                <div className="w-auto">
+                    <Navbar onOpenSidebar={() => toggleSidebar(true)} buttons={buttons}/>
+                </div>
+                <div className="overflow-auto h-full">
+                    {children}
+                </div>
             </div>
         </div>
     </div>

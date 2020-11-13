@@ -3,41 +3,36 @@ import Link from "next/link";
 import Divider from "../Misc/Divider";
 import Spacer from "../Misc/Spacer";
 import {Transition} from "@headlessui/react";
+import Dropdown from "../Dropdown";
+import AccountMenu from "./AccountMenu";
 
 export default function Sidebar({mobile, isOpen, onClose = null}) {
     const [expanded, toggleExpanded] = useState(true)
     const styles = {
-        root: `${expanded ? "w-100" : "w-96 md:w-auto"} h-full md:border-r shadow-2xl 
-        md:shadow-none border-gray-200 bg-white z-50 shadow-sm p-2.5 flex flex-col absolute md:relative md:flex`,
+        root: `${expanded ? "w-screen sm:w-100" : "w-96 lg:w-auto"} h-full lg:border-r shadow-2xl 
+        lg:shadow-none border-gray-200 bg-white z-50 shadow-sm default-padding flex flex-col absolute lg:relative lg:flex`,
         iconButton: "p-2 bg-gray-100 rounded-full hover:bg-gray-200 focus:bg-gray-200",
-        courseChatListItem: `p-3 hover:bg-gray-100 focus:bg-gray-200 rounded-xl flex justify-start 
+        courseChatListItem: `p-3 hover:bg-gray-100 focus:bg-gray-100 rounded-xl flex justify-start 
         items-center w-full text-left focus:outline-none`,
-        hiddenWhenCollapsed: " " + (!expanded && "md:hidden"),
-        hiddenWhenExpanded: " " + (expanded && "md:hidden"),
+        hiddenWhenCollapsed: " " + (!expanded && "lg:hidden"),
+        hiddenWhenExpanded: " " + (expanded && "lg:hidden"),
         avatar: "h-11 w-11 flex justify-center items-center rounded-full text-white ",
-        selected: " bg-blue-50 text-blue-600 hover:bg-blue-100 focus:bg-blue-100 border border-blue-100",
+        selected: " bg-blue-50 text-blue-700 hover:bg-blue-100 focus:bg-blue-100",
     }
     return <Transition
         show={isOpen || !mobile}
-        enter="transition-opacity duration-75"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-150"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
     >
         <div
             className={styles.root}>
-            <div className="h-stack p-2.5">
+            <div className="h-stack default-padding">
                 <div className="h-stack">
-                    <img
-                        className={`${styles.avatar} mr-2`}
-                        src="https://firebasestorage.googleapis.com/v0/b/brown-ep.appspot.com/o/placeholder_avatar.png?alt=media&token=37fab188-d312-48d6-82fe-8b74e84f929e"/>
+                    <AccountMenu/>
                     <h1 className={"text-2xl font-semibold " + styles.hiddenWhenCollapsed}>Chats</h1>
+
                 </div>
 
                 <div className={"flex justify-end items-center text-gray-600 space-x-2 " + styles.hiddenWhenCollapsed}>
-                    <button className={styles.iconButton + " md:hidden"} onClick={() => onClose(false)}>
+                    <button className={styles.iconButton + " lg:hidden"} onClick={() => onClose(false)}>
                         <svg className="h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
@@ -60,8 +55,7 @@ export default function Sidebar({mobile, isOpen, onClose = null}) {
                     </button>
                 </div>
             </div>
-            <Divider className="my-2"/>
-            <ul className="my-4 space-y-1">
+            <ul className="space-y-1 overflow-y-auto mt-2">
                 <li>
                     <Link href="/2">
                         <a className={styles.courseChatListItem + styles.selected}>
@@ -112,7 +106,7 @@ export default function Sidebar({mobile, isOpen, onClose = null}) {
                 </li>
             </ul>
             <Spacer/>
-            <button className={styles.courseChatListItem + " hidden md:flex"} onClick={() => toggleExpanded(!expanded)}>
+            <button className={styles.courseChatListItem + " hidden lg:flex"} onClick={() => toggleExpanded(!expanded)}>
                 <div className="flex justify-center w-full items-center mx-auto text-gray-500">
                     <div className="p-2 border rounded-lg shadow-sm">
                         <svg className={`h-4 transform ${!expanded && 'rotate-180'}`} xmlns="http://www.w3.org/2000/svg"

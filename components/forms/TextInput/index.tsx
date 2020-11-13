@@ -12,10 +12,11 @@ interface Props {
     autoComplete?: string;
     id?: string;
     required?: boolean;
-    disabled?: boolean
+    disabled?: boolean;
+    invisibleLabel?: boolean;
 }
 
-const TextInput: React.FC<Props> = ({label, error, helperText, required, ...props}) => {
+const TextInput: React.FC<Props> = ({label, error, helperText, required, invisibleLabel, ...props}) => {
 
     const elementId = useRef(null)
 
@@ -24,9 +25,9 @@ const TextInput: React.FC<Props> = ({label, error, helperText, required, ...prop
 
 
     return <div className="text-left">
-        <label htmlFor={elementId.current} className="block text-sm font-medium leading-5 text-gray-700">{label}</label>
+        <label htmlFor={elementId.current} className={`block text-sm font-medium leading-5 text-gray-700 ${invisibleLabel && "sr-only"}`}>{label}</label>
         <div className="mt-1 relative rounded-md shadow-sm">
-            <input {...props} required={required} ref={elementId} className={`p-2.5 text-sm rounded-md border 
+            <input {...props} required={required} ref={elementId} className={`p-3 rounded-lg border 
             focus:outline-none w-full transition-shadow duration-150 ${error ? errorClassnames : classNames}`}/>
 
             {error && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">

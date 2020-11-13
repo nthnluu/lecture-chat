@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import fb from "../util/firebase-config";
 import SessionContext from "../util/SessionContext";
 import Head from "next/head";
+import LinearProgress from "../components/LinearProgress";
 
 function MyApp({Component, pageProps}: AppProps) {
 
@@ -28,11 +29,11 @@ function MyApp({Component, pageProps}: AppProps) {
     }, [])
 
     // Waits until the session is loaded before loading the page
-    if (!sessionLoaded) return null
+    if (!sessionLoaded) return <LinearProgress/>
 
     return (<SessionContext.Provider value={{isAuthenticated, userProfile}}>
         <Head>
-            <title>No BS Next</title>
+            <title>Lecture Chat</title>
         </Head>
         <Component {...pageProps} />
     </SessionContext.Provider>)
