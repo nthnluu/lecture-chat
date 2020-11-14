@@ -61,14 +61,16 @@ const PageLayout: React.FC<Props> = ({
             .then(() => router.push('/'))
     }
 
-    useEffect(() => {
+    function adaptViewport() {
         let vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
-        window.addEventListener('resize', () => {
-            // We execute the same script as before
-            let vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-        });
+    }
+
+    useEffect(() => {
+        adaptViewport()
+        window.addEventListener('resize', adaptViewport);
+
+        return window.removeEventListener('resize', adaptViewport)
     }, [])
 
 
