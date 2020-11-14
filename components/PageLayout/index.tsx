@@ -14,8 +14,8 @@ interface Props {
     redirectPath?: string;
     content?: any
     title: string;
-    buttons: ReactElement;
-    sidebarConfig: any;
+    buttons?: ReactElement;
+    sidebarConfig?: any;
     thirdArea?: ReactElement
     mainAreaFooter?: ReactElement
     loading?: Boolean
