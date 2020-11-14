@@ -62,7 +62,7 @@ const PageLayout: React.FC<Props> = ({
     }
 
 
-    return <div>
+    return <div className="h-screen">
         <Head>
             <title>
                 {`${title} | Lecture Chat`}
@@ -84,7 +84,7 @@ const PageLayout: React.FC<Props> = ({
                     <div className="right-0 z-40 absolute w-full">
                         <Navbar title={title} onOpenSidebar={() => toggleSidebar(true)} buttons={buttons}/>
                     </div>
-                    <div className="h-full flex justify-between pt-16 pb-12 sm:pb-0">
+                    <div className="h-full flex justify-between pt-16 sm:pb-0">
                         <div className="relative h-full w-full">
                             <div className="overflow-auto h-full w-full" id="main-container">
                                 {children}
