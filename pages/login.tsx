@@ -27,7 +27,7 @@ const Login = () => {
         <div className="text-center h-full relative flex justify-center items-center px-12">
             <div>
                 <img src="/logo.svg" className="h-24 mx-auto mb-8"/>
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Welcome to Lecture Chat</h1>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Welcome to Lecture Chat</h1>
                 <h2 className="text-lg md:text-xl text-gray-400 font-light mb-8 max-w-md mx-auto">
                     A simple, effective way for students and teachers to communicate.
                 </h2>
