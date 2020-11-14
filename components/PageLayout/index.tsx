@@ -70,7 +70,7 @@ const PageLayout: React.FC<Props> = ({
         </Head>
         <LinearProgress hidden={!loading}/>
         <ScrollContext.Provider value={scrollToBottom}>
-            <div className="flex h-screen">
+            <div className="flex h-screen fill-height">
                 <div>
                     <div className="hidden lg:flex h-full">
                         <Sidebar loading={loading} config={sidebarConfig} isOpen={true} mobile={false}/>

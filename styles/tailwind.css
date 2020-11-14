@@ -18,8 +18,20 @@ button:focus {
     @apply p-2
 }
 
-html {
+body {
+    min-height: 100vh;
+    /* mobile viewport bug fix */
     min-height: -webkit-fill-available;
+}
+
+.fill-height {
+    min-height: 100vh;
+    /* mobile viewport bug fix */
+    min-height: -webkit-fill-available;
+}
+
+html {
+    height: -webkit-fill-available;
 }
 /* purgecss end ignore */
 
