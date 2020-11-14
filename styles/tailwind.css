@@ -17,6 +17,10 @@ button:focus {
 .default-padding {
     @apply p-2
 }
+
+html {
+    min-height: -webkit-fill-available;
+}
 /* purgecss end ignore */
 
 @tailwind  utilities;
