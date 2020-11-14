@@ -20,13 +20,13 @@ export default function () {
     }
 
     return (
-        <div className="relative text-left z-50">
+        <div className="relative text-left z-50 mx-auto">
             <Menu>
                 {({open}) => (
                     <>
                         <Menu.Button className="h-auto">
                             <img
-                                className={`${styles.avatar} mr-3`}
+                                className={`${styles.avatar}`}
                                 src={userProfile.photoURL}/>
                         </Menu.Button>
 
@@ -42,12 +42,14 @@ export default function () {
                             <Menu.Items
                                 static
                                 className="absolute
-                                    left-0 w-56 mt-2 origin-top-right bg-white border border-gray-200
+                                    left-0 w-56 mt-1 origin-top-right bg-white border border-gray-200
                                     divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                             >
                                 <div className="px-4 py-3">
-                                    <p className="text-sm leading-5">Signed in as</p>
                                     <p className="text-sm font-medium leading-5 text-gray-900 truncate">
+                                        {userProfile.displayName}
+                                    </p>
+                                    <p className="text-sm font-light leading-5 text-gray-600 truncate">
                                         {userProfile.email}
                                     </p>
                                 </div>

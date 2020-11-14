@@ -1,9 +1,17 @@
 .slider{
     position:absolute;
     width: 100%;
-    height:4px;
     overflow-x: hidden;
     z-index: 1000;
+    height:2px;
+}
+
+.thin-slider {
+    height:2px !important;
+}
+
+.thick-slider {
+    height:4px !important;
 }
 
 .line{
