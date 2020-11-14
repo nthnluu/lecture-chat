@@ -21,7 +21,6 @@ const MessageBarView = ({courseId}) => {
     }
 
     return <form onSubmit={sendMessage} className="flex items-center justify-between w-full py-3 border-t bg-white"
-                style={{marginTop: '-4.85rem'}}
     >
         <div
             style={{borderRadius: "20px 20px 20px 20px"}}

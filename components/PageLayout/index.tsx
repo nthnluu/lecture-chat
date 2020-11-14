@@ -70,7 +70,7 @@ const PageLayout: React.FC<Props> = ({
         </Head>
         <LinearProgress hidden={!loading}/>
         <ScrollContext.Provider value={scrollToBottom}>
-            <div className="flex" style={{height: window && window.innerHeight}}>
+            <div className="flex" style={{height: '100%'}}>
                 <div>
                     <div className="hidden lg:flex h-full">
                         <Sidebar loading={loading} config={sidebarConfig} isOpen={true} mobile={false}/>
@@ -81,15 +81,15 @@ const PageLayout: React.FC<Props> = ({
                     </div>
                 </div>
                 <div className="overflow-hidden w-full default-padding h-screen relative">
-                    <div className="w-full z-50">
+                    <div className="right-0 z-40 absolute w-full">
                         <Navbar title={title} onOpenSidebar={() => toggleSidebar(true)} buttons={buttons}/>
                     </div>
-                    <div className="h-full flex justify-between pb-8">
-                        <div className="relative h-full w-full b-2">
+                    <div className="h-full flex justify-between pt-16">
+                        <div className="relative h-full w-full">
                             <div className="overflow-auto h-full w-full" id="main-container">
                                 {children}
                             </div>
-                            {mainAreaFooter && <div className="absolute bottom-0 py-3.5 w-full bg-white">
+                            {mainAreaFooter && <div className="absolute bottom-0 w-full bg-white">
                                 {mainAreaFooter}
                             </div>}
 
