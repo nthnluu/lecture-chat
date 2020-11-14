@@ -61,6 +61,11 @@ const PageLayout: React.FC<Props> = ({
             .then(() => router.push('/'))
     }
 
+    useEffect(() => {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }, [])
+
 
     return <>
         <Head>
@@ -70,7 +75,7 @@ const PageLayout: React.FC<Props> = ({
         </Head>
         <LinearProgress hidden={!loading}/>
         <ScrollContext.Provider value={scrollToBottom}>
-            <div className="flex h-screen">
+            <div className="flex full-height">
                 <div className="h-full">
                     <div className="hidden lg:flex h-full">
                         <Sidebar loading={loading} config={sidebarConfig} isOpen={true} mobile={false}/>
