@@ -62,7 +62,7 @@ const PageLayout: React.FC<Props> = ({
     }
 
 
-    return <div className="h-screen">
+    return <>
         <Head>
             <title>
                 {`${title} | Lecture Chat`}
@@ -70,8 +70,8 @@ const PageLayout: React.FC<Props> = ({
         </Head>
         <LinearProgress hidden={!loading}/>
         <ScrollContext.Provider value={scrollToBottom}>
-            <div className="flex" style={{height: '100%'}}>
-                <div>
+            <div className="flex h-screen">
+                <div className="h-full">
                     <div className="hidden lg:flex h-full">
                         <Sidebar loading={loading} config={sidebarConfig} isOpen={true} mobile={false}/>
                     </div>
@@ -80,11 +80,11 @@ const PageLayout: React.FC<Props> = ({
                                  mobile={true}/>
                     </div>
                 </div>
-                <div className="overflow-hidden w-full default-padding h-screen relative">
+                <div className="w-full default-padding h-full relative">
                     <div className="right-0 z-40 absolute w-full">
                         <Navbar title={title} onOpenSidebar={() => toggleSidebar(true)} buttons={buttons}/>
                     </div>
-                    <div className="h-full flex justify-between pt-16 sm:pb-0">
+                    <div className="h-full flex justify-between pt-16">
                         <div className="relative h-full w-full">
                             <div className="overflow-auto h-full w-full" id="main-container">
                                 {children}
@@ -105,7 +105,7 @@ const PageLayout: React.FC<Props> = ({
             </div>
         </ScrollContext.Provider>
 
-    </div>
+    </>
 
 
 }
