@@ -1,4 +1,4 @@
-import {ReactElement, useContext, useEffect, useState} from "react";
+import React, {ReactElement, useContext, useEffect, useState} from "react";
 import SessionContext from "../../util/SessionContext";
 import {useRouter} from "next/router";
 import fb from "../../util/firebase-config";
@@ -7,6 +7,10 @@ import Sidebar from "./Sidebar";
 import LinearProgress from "../LinearProgress";
 import Navbar from "./Navbar";
 import ScrollContext from "../../util/ScrollContext";
+import TextInput from "../forms/TextInput";
+import Modal from "../Modals/Modal";
+import ModalContext from "../../util/ModalContext";
+import CreateCourseModal from "../Modals/CreateCourseModal";
 
 interface Props {
     children: ReactElement;
@@ -45,6 +49,7 @@ const PageLayout: React.FC<Props> = ({
     const router = useRouter()
     const {isAuthenticated, userProfile} = useContext(SessionContext)
     const [sidebarOpen, toggleSidebar] = useState(false)
+    const [createModal, toggleCreateModal] = useState(false)
 
     function scrollToBottom() {
         const objDiv = document.getElementById("main-container");
@@ -69,9 +74,8 @@ const PageLayout: React.FC<Props> = ({
     useEffect(() => {
         adaptViewport()
         window.addEventListener('resize', adaptViewport);
-
-        return window.removeEventListener('resize', adaptViewport)
     }, [])
+
 
 
     return <>
@@ -81,41 +85,45 @@ const PageLayout: React.FC<Props> = ({
             </title>
         </Head>
         <LinearProgress hidden={!loading}/>
-        <ScrollContext.Provider value={scrollToBottom}>
-            <div className="flex full-height">
-                <div className="h-full">
-                    <div className="hidden lg:flex h-full">
-                        <Sidebar loading={loading} config={sidebarConfig} isOpen={true} mobile={false}/>
-                    </div>
-                    <div className="block lg:hidden h-full">
-                        <Sidebar loading={loading} config={sidebarConfig} isOpen={sidebarOpen} onClose={toggleSidebar}
-                                 mobile={true}/>
-                    </div>
-                </div>
-                <div className="w-full default-padding h-full relative">
-                    <div className="right-0 z-40 absolute w-full">
-                        <Navbar title={title} onOpenSidebar={() => toggleSidebar(true)} buttons={buttons}/>
-                    </div>
-                    <div className="h-full flex justify-between pt-16">
-                        <div className="relative h-full w-full">
-                            <div className="overflow-auto h-full w-full" id="main-container">
-                                {children}
-                            </div>
-                            {mainAreaFooter && <div className="absolute bottom-0 w-full bg-white">
-                                {mainAreaFooter}
-                            </div>}
-
+        <ModalContext.Provider value={{toggleCreateModal}}>
+            <ScrollContext.Provider value={scrollToBottom}>
+                <CreateCourseModal isOpen={createModal} onClose={() => toggleCreateModal(false)}/>
+                <div className="flex full-height">
+                    <div className="h-full">
+                        <div className="hidden lg:flex h-full">
+                            <Sidebar loading={loading} config={sidebarConfig} isOpen={true} mobile={false}/>
                         </div>
-                        {thirdArea && <>
-                            <div className="overflow-auto h-full w-full md:w-1/2 p-4 ml-1 md:border-l
-                        absolute md:relative right-0 bg-white shadow-2xl md:shadow-none">
-                                {thirdArea}
+                        <div className="block lg:hidden h-full">
+                            <Sidebar loading={loading} config={sidebarConfig} isOpen={sidebarOpen}
+                                     onClose={toggleSidebar}
+                                     mobile={true}/>
+                        </div>
+                    </div>
+                    <div className="w-full default-padding h-full relative">
+                        <div className="right-0 z-40 absolute w-full">
+                            <Navbar title={title} onOpenSidebar={() => toggleSidebar(true)} buttons={buttons}/>
+                        </div>
+                        <div className="h-full flex justify-between pt-16">
+                            <div className="relative h-full w-full">
+                                <div className="overflow-auto h-full w-full" id="main-container">
+                                    {children}
+                                </div>
+                                {mainAreaFooter && <div className="absolute bottom-0 w-full bg-white">
+                                    {mainAreaFooter}
+                                </div>}
+
                             </div>
-                        </>}
+                            {thirdArea && <>
+                                <div className="overflow-auto h-full w-full md:w-1/2 p-4 ml-1 md:border-l
+                        absolute md:relative right-0 bg-white shadow-2xl md:shadow-none">
+                                    {thirdArea}
+                                </div>
+                            </>}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </ScrollContext.Provider>
+            </ScrollContext.Provider>
+        </ModalContext.Provider>
 
     </>
 

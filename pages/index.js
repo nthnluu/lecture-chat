@@ -1,10 +1,13 @@
 import PageLayout from "../components/PageLayout";
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useMemo, useState} from "react";
 import fb from "../util/firebase-config";
 import SessionContext from "../util/SessionContext";
 import MessageView from "../components/PageLayout/StudentChatView/MessageView";
 import MessageBarView from "../components/PageLayout/StudentChatView/MessageBarView";
 import ReactMarkdown from 'react-markdown'
+import Modal from "../components/Modals/Modal";
+import TextInput from "../components/forms/TextInput";
+import ModalContext from "../util/ModalContext";
 
 export default function Home() {
     const [infoArea, toggleInfoArea] = useState(false)
@@ -12,6 +15,7 @@ export default function Home() {
     const [currentCourseId, setCurrentCourseId] = useState()
     const currentCourse = courses && (courses[currentCourseId] ?? undefined)
     const [loading, toggleLoading] = useState(true)
+
 
 
     function raiseHand() {
@@ -52,8 +56,8 @@ export default function Home() {
 
     function fetchCourses() {
         const dbRef = fb.firestore().collection('course')
-        dbRef.where("roles.owner", "==", userProfile.uid).get()
-            .then(snapshot => {
+        dbRef.where("roles.owner", "==", userProfile.uid)
+            .onSnapshot(snapshot => {
                 let newCoursesObj = {}
                 snapshot.docs.forEach((doc, index) => {
                     const data = doc.data()
@@ -67,8 +71,8 @@ export default function Home() {
                         selected: index === 0
                     }
                 })
-                dbRef.where("roles.students", "array-contains", userProfile.uid).get()
-                    .then(snap => {
+                dbRef.where("roles.students", "array-contains", userProfile.uid)
+                    .onSnapshot(snap => {
                         let courseObj = {...newCoursesObj}
                         snap.docs.forEach((doc, index) => {
                             const data = doc.data()
@@ -94,6 +98,7 @@ export default function Home() {
         fetchCourses()
     }, [])
 
+    const courseObjs = useMemo(() => Object.values(courses).sort((a, b) => (a.title > b.title) ? 1 : -1), [courses])
     const sidebarConfig = {
         title: "Chats",
         buttons: [{
@@ -105,25 +110,27 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
             </svg>
         }],
-        sidebarItems: Object.values(courses),
+        sidebarItems: courseObjs,
         selectedItem: currentCourseId
     }
 
 
     return (
-        <PageLayout sidebarConfig={sidebarConfig}
-                    title={(!loading  && courses[currentCourseId]) && courses[currentCourseId].title}
-                    buttons={navbarButtons} privateRoute={true}
-                    redirectPath='/login'
-                    loading={loading}
-                    mainAreaFooter={!loading && <MessageBarView courseId={currentCourseId}/>}
-                    thirdArea={(infoArea && !loading && currentCourse) && <article className="prose">
-                        <ReactMarkdown>
-                            {currentCourse.infoPanel}
-                        </ReactMarkdown>
-                    </article>}
-        >
-            {!loading && <MessageView courseId={currentCourseId}/>}
-        </PageLayout>
+
+            <PageLayout sidebarConfig={sidebarConfig}
+                        title={(!loading  && courses[currentCourseId]) && courses[currentCourseId].title}
+                        buttons={navbarButtons} privateRoute={true}
+                        redirectPath='/login'
+                        loading={loading}
+                        mainAreaFooter={!loading && <MessageBarView courseId={currentCourseId}/>}
+                        thirdArea={(infoArea && !loading && currentCourse) && <article className="prose">
+                            <ReactMarkdown>
+                                {currentCourse.infoPanel}
+                            </ReactMarkdown>
+                        </article>}
+            >
+                {!loading && <MessageView courseId={currentCourseId}/>}
+            </PageLayout>
+
     )
 }

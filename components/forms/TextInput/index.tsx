@@ -3,7 +3,7 @@ import useTheme from "../../../util/useTheme";
 
 interface Props {
     value?: string;
-    onChange?: () => void;
+    onChange?: (any) => void;
     placeholder?: string;
     label?: string;
     error?: boolean;
@@ -24,9 +24,9 @@ const TextInput: React.FC<Props> = ({label, error, helperText, required, invisib
     const errorClassnames = "border-red-300 text-red-800 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red"
 
 
-    return <div className="text-left">
+    return <div className="text-left w-full">
         <label htmlFor={elementId.current} className={`block text-sm font-medium leading-5 text-gray-700 ${invisibleLabel && "sr-only"}`}>{label}</label>
-        <div className="mt-1 relative rounded-md shadow-sm">
+        <div className="mt-1 relative rounded-md shadow-sm w-full">
             <input {...props} required={required} ref={elementId} className={`p-3 rounded-lg border 
             focus:outline-none w-full transition-shadow duration-150 ${error ? errorClassnames : classNames}`}/>
 

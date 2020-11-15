@@ -1,10 +1,11 @@
 import * as React from "react";
 import {Menu, Transition} from "@headlessui/react";
-import TextInput from "./forms/TextInput";
-import Modal from "./Modals/Modal";
+import {useContext} from "react";
+import ModalContext from "../util/ModalContext";
 
 export default function ({button}) {
-    return (<>
+    const {toggleCreateModal} = useContext(ModalContext)
+    return (
             <div className="relative text-left z-50">
                 <Menu>
                     {({open}) => (
@@ -25,29 +26,22 @@ export default function ({button}) {
                                 <Menu.Items
                                     static
                                     className="absolute
-                                    left-0 w-56 mt-2 origin-top-right bg-white border border-gray-200
+                                    right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200
                                     divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                                 >
-                                    <div className="px-4 py-3">
-                                        <p className="text-sm leading-5">Signed in as</p>
-                                        <p className="text-sm font-medium leading-5 text-gray-900 truncate">
-                                            tom@example.com
-                                        </p>
-                                    </div>
-
                                     <div className="py-1">
                                         <Menu.Item>
                                             {({active}) => (
-                                                <a
-                                                    href="#account-settings"
+                                                <button
+                                                    onClick={() => toggleCreateModal(true)}
                                                     className={`${
                                                         active
                                                             ? "bg-gray-100 text-gray-900"
                                                             : "text-gray-700"
                                                     } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                                                 >
-                                                    Account settings
-                                                </a>
+                                                    Create new course
+                                                </button>
                                             )}
                                         </Menu.Item>
                                         <Menu.Item>
@@ -60,16 +54,9 @@ export default function ({button}) {
                                                             : "text-gray-700"
                                                     } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                                                 >
-                                                    Support
+                                                    Join a course
                                                 </a>
                                             )}
-                                        </Menu.Item>
-                                        <Menu.Item
-                                            as="span"
-                                            disabled
-                                            className="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 cursor-not-allowed opacity-50"
-                                        >
-                                            New feature (soon)
                                         </Menu.Item>
                                         <Menu.Item>
                                             {({active}) => (
@@ -81,24 +68,7 @@ export default function ({button}) {
                                                             : "text-gray-700"
                                                     } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                                                 >
-                                                    License
-                                                </a>
-                                            )}
-                                        </Menu.Item>
-                                    </div>
-
-                                    <div className="py-1">
-                                        <Menu.Item>
-                                            {({active}) => (
-                                                <a
-                                                    href="#sign-out"
-                                                    className={`${
-                                                        active
-                                                            ? "bg-gray-100 text-gray-900"
-                                                            : "text-gray-700"
-                                                    } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
-                                                >
-                                                    Sign out
+                                                    Get transcript
                                                 </a>
                                             )}
                                         </Menu.Item>
@@ -109,6 +79,5 @@ export default function ({button}) {
                     )}
                 </Menu>
             </div>
-        </>
     );
 }

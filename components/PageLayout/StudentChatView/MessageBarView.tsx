@@ -9,14 +9,17 @@ const MessageBarView = ({courseId}) => {
         if (courseId) {
             event.persist()
             event.preventDefault()
-            fb.firestore().collection('course').doc(courseId).collection('messages').add({
-                content: event.target.msgarea.value,
-                displayName: userProfile.displayName,
-                imageURL: userProfile.photoURL,
-                sentAt: new Date(),
-                userId: userProfile.uid
-            })
-                .then(() => event.target.reset())
+            const val = event.target.msgarea.value
+            if (val.length >= 1) {
+                fb.firestore().collection('course').doc(courseId).collection('messages').add({
+                    content: event.target.msgarea.value,
+                    displayName: userProfile.displayName,
+                    imageURL: userProfile.photoURL,
+                    sentAt: new Date(),
+                    userId: userProfile.uid
+                })
+                event.target.reset()
+            }
         }
     }
 
@@ -24,9 +27,9 @@ const MessageBarView = ({courseId}) => {
     >
         <div
             style={{borderRadius: "20px 20px 20px 20px"}}
-            className="w-full py-1.5 px-3 border shadow-sm w-full mr-2 flex justify-between items-center">
+            className="w-full py-1.5 px-3 border shadow-sm w-full mr-2 flex justify-between items-center text-gray-800">
             <input required autoComplete="off" id="msgarea" className=" focus:outline-none w-full resize-none"
-                              placeholder="Enter your message here..."/>
+                   placeholder="Enter your message here..."/>
             <div className="h-stack space-x-2">
                 <button>
                     <svg className="h-6 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none"

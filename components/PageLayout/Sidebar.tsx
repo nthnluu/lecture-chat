@@ -4,6 +4,7 @@ import Spacer from "../Misc/Spacer";
 import {Transition} from "@headlessui/react";
 import AccountMenu from "./AccountMenu";
 import NavbarButtons from "./NavbarButtons";
+import AddCourseDropdown from "../AddCourseDropdown";
 
 export default function Sidebar({config, mobile, isOpen, onClose = null, loading}) {
     const [expanded, toggleExpanded] = useState(true)
@@ -39,7 +40,8 @@ export default function Sidebar({config, mobile, isOpen, onClose = null, loading
                                   d="M6 18L18 6M6 6l12 12"/>
                         </svg>
                     </button>
-                    <NavbarButtons buttons={config.buttons}/>
+                    <AddCourseDropdown button={<NavbarButtons buttons={config.buttons}/>}/>
+
                 </div>
             </div>
             <ul className="space-y-1 overflow-y-auto mt-0.5">
